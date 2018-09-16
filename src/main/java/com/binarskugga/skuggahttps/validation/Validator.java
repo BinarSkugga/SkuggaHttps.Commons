@@ -28,11 +28,11 @@ public class Validator {
 		return new DoubleValidator(this, name.toUpperCase(), value);
 	}
 
-	public ValueValidator<Object> object(String name, Object value) {
+	public ValueValidator<ValueValidator, Object> object(String name, Object value) {
 		return new ValueValidator<>(this, name.toUpperCase(), value);
 	}
 
-	public <T> ValueValidator<T> generic(Class<T> clazz, String name, T value) {
+	public <T> ValueValidator<ValueValidator, T> generic(Class<T> clazz, String name, T value) {
 		return new ValueValidator<>(this, name.toUpperCase(), value);
 	}
 
