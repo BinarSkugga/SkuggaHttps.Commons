@@ -21,17 +21,17 @@ public class ValueValidator<T> {
 		return this.validator;
 	}
 
-	public ValueValidator notNull(Object value) {
-		if(value == null) {
+	public ValueValidator notNull() {
+		if(this.value == null) {
 			this.validator.addError(new ValidationError(this.name, ValidationErrorType.NULL.name()));
 			this.isNull = true;
 		}
 		return this;
 	}
 
-	public <T> ValueValidator custom(T object, String type, Predicate<T> validator) {
+	public ValueValidator predicate(String type, Predicate<T> validator) {
 		if(isNull) return this;
-		if(!validator.test(object)) this.validator.addError(new ValidationError(this.name, type));
+		if(!validator.test(this.value)) this.validator.addError(new ValidationError(this.name, type));
 		return this;
 	}
 
