@@ -1,5 +1,7 @@
 package com.binarskugga.skuggahttps.validation;
 
+import com.binarskugga.skuggahttps.validation.impl.*;
+
 import java.util.*;
 
 public class Validator {
@@ -14,11 +16,23 @@ public class Validator {
 		return this.errors;
 	}
 
-	public ValueValidator field(String field) {
-		return new ValueValidator(this, field.toUpperCase());
+	public StringValidator string(String name, String value) {
+		return new StringValidator(this, name.toUpperCase(), value);
 	}
 
-	void addError(ValidationError error) {
+	public LongValidator integer(String name, Long value) {
+		return new LongValidator(this, name.toUpperCase(), value);
+	}
+
+	public DoubleValidator floating(String name, Double value) {
+		return new DoubleValidator(this, name.toUpperCase(), value);
+	}
+
+	public ValueValidator<Object> object(String name, Object value) {
+		return new ValueValidator<>(this, name.toUpperCase(), value);
+	}
+
+	public void addError(ValidationError error) {
 		this.errors.add(error);
 	}
 
