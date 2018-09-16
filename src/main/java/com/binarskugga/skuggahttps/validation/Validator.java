@@ -14,8 +14,8 @@ public class Validator {
 		return this.errors;
 	}
 
-	public FieldValidator field(String field) {
-		return new FieldValidator(this, field.toUpperCase());
+	public ValueValidator field(String field) {
+		return new ValueValidator(this, field.toUpperCase());
 	}
 
 	void addError(ValidationError error) {
