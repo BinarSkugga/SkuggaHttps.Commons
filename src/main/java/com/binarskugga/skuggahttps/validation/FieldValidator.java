@@ -15,7 +15,7 @@ public class FieldValidator {
 		this.field = field;
 	}
 
-	public Validator done() {
+	public Validator next() {
 		return this.validator;
 	}
 
