@@ -1,17 +1,19 @@
 package com.binarskugga.skuggahttps.validation;
 
-import lombok.*;
-
 import java.util.function.*;
 import java.util.regex.*;
 
-@AllArgsConstructor
 public class FieldValidator {
 
 	private static Pattern MAIL_VALIDATOR = Pattern.compile("/.+@.+\\..+", Pattern.CASE_INSENSITIVE);
 
 	private Validator validator;
 	private String field;
+
+	public FieldValidator(Validator validator, String field) {
+		this.validator = validator;
+		this.field = field;
+	}
 
 	public Validator done() {
 		return this.validator;
