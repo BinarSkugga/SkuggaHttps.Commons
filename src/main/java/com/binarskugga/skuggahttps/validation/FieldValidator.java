@@ -37,6 +37,11 @@ public class FieldValidator {
 		return this;
 	}
 
+	public FieldValidator notNull(Object value) {
+		if(value == null) this.validator.addError(new ValidationError(this.field, ValidationErrorType.NULL.name()));
+		return this;
+	}
+
 	public FieldValidator mail(String value) {
 		return this.pattern(MAIL_VALIDATOR, value);
 	}
