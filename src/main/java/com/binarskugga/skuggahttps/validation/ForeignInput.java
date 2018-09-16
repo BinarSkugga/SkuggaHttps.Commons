@@ -4,6 +4,6 @@ import java.util.*;
 
 public abstract class ForeignInput {
 
-	protected abstract Set<ValidationError> validate();
+	public abstract Set<ValidationError> validate();
 
 }
