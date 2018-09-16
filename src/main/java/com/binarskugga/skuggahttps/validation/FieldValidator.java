@@ -5,7 +5,7 @@ import java.util.regex.*;
 
 public class FieldValidator {
 
-	private static Pattern MAIL_VALIDATOR = Pattern.compile("/.+@.+\\..+", Pattern.CASE_INSENSITIVE);
+	private static Pattern MAIL_VALIDATOR = Pattern.compile(".+@.+\\..+", Pattern.CASE_INSENSITIVE);
 
 	private Validator validator;
 	private String field;
