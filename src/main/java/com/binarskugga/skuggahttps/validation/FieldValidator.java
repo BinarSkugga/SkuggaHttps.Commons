@@ -27,6 +27,18 @@ public class FieldValidator {
 		return this;
 	}
 
+	public FieldValidator minLength(int min, String value) {
+		if(isNull) return this;
+		if(value.length() < min) this.validator.addError(new ValidationError(this.field, ValidationErrorType.MIN_LENGTH.name()));
+		return this;
+	}
+
+	public FieldValidator maxLength(int max, String value) {
+		if(isNull) return this;
+		if(value.length() > max) this.validator.addError(new ValidationError(this.field, ValidationErrorType.MAX_LENGTH.name()));
+		return this;
+	}
+
 	public FieldValidator bounds(long min, long max, long value) {
 		if(value > max) this.validator.addError(new ValidationError(this.field, ValidationErrorType.MAX.name()));
 		if(value < min) this.validator.addError(new ValidationError(this.field, ValidationErrorType.MIN.name()));
