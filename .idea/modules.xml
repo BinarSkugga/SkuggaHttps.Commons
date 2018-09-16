@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SkuggaHttps.Auth.iml" filepath="$PROJECT_DIR$/.idea/SkuggaHttps.Auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SkuggaHttps.Commons.iml" filepath="$PROJECT_DIR$/SkuggaHttps.Commons.iml" />
     </modules>
   </component>
 </project>

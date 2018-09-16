@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SkuggaHttps.Auth" />
+        <module name="SkuggaHttps.Commons" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SkuggaHttps.Auth" target="1.8" />
+      <module name="SkuggaHttps.Commons" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
