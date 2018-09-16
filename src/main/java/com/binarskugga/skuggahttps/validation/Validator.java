@@ -32,6 +32,10 @@ public class Validator {
 		return new ValueValidator<>(this, name.toUpperCase(), value);
 	}
 
+	public <T> ValueValidator<T> generic(Class<T> clazz, String name, T value) {
+		return new ValueValidator<>(this, name.toUpperCase(), value);
+	}
+
 	public void addError(ValidationError error) {
 		this.errors.add(error);
 	}
