@@ -2,6 +2,8 @@ package com.binarskugga.skuggahttps.validation.impl;
 
 import com.binarskugga.skuggahttps.validation.*;
 
+import java.util.function.*;
+
 public class DoubleValidator extends ValueValidator<DoubleValidator, Double> {
 
 	public DoubleValidator(Validator validator, String name, Double value) {
@@ -16,6 +18,18 @@ public class DoubleValidator extends ValueValidator<DoubleValidator, Double> {
 
 	public DoubleValidator unsigned() {
 		if(this.value < 0) this.validator.addError(new ValidationError(this.name, ValidationErrorType.UNSIGNED.name()));
+		return this;
+	}
+
+	@Override
+	public DoubleValidator notNull() {
+		if(this.value == null) this.validator.addError(new ValidationError(this.name, ValidationErrorType.NULL.name()));
+		return this;
+	}
+
+	@Override
+	public DoubleValidator predicate(String type, Predicate<Double> condition) {
+		if(!condition.test(this.value)) this.validator.addError(new ValidationError(this.name, type));
 		return this;
 	}
 

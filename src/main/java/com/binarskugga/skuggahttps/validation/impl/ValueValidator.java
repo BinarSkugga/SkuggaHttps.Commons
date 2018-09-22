@@ -4,7 +4,7 @@ import com.binarskugga.skuggahttps.validation.*;
 
 import java.util.function.*;
 
-public class ValueValidator<V, T> {
+public abstract class ValueValidator<V extends ValueValidator, T> {
 	protected Validator validator;
 	protected String name;
 
@@ -21,18 +21,7 @@ public class ValueValidator<V, T> {
 		return this.validator;
 	}
 
-	public V notNull() {
-		if(this.value == null) {
-			this.validator.addError(new ValidationError(this.name, ValidationErrorType.NULL.name()));
-			this.isNull = true;
-		}
-		return (V) this;
-	}
-
-	public V predicate(String type, Predicate<T> validator) {
-		if(isNull) return (V) this;
-		if(!validator.test(this.value)) this.validator.addError(new ValidationError(this.name, type));
-		return (V) this;
-	}
+	public abstract V notNull();
+	public abstract V predicate(String type, Predicate<T> condition);
 
 }

@@ -2,6 +2,7 @@ package com.binarskugga.skuggahttps.validation.impl;
 
 import com.binarskugga.skuggahttps.validation.*;
 
+import java.util.function.*;
 import java.util.regex.*;
 
 public class StringValidator extends ValueValidator<StringValidator, String> {
@@ -40,6 +41,18 @@ public class StringValidator extends ValueValidator<StringValidator, String> {
 		if(isNull) return this;
 		if(!pattern.matcher(this.value).matches()) this.validator.addError(new ValidationError(this.name, ValidationErrorType.WRONG_FORMAT.name()));
 		return this;
+	}
+
+	@Override
+	public StringValidator notNull() {
+		if(this.value == null) this.validator.addError(new ValidationError(this.name, ValidationErrorType.NULL.name()));
+		return this;
+	}
+
+	@Override
+	public StringValidator predicate(String type, Predicate<String> condition) {
+		if(!condition.test(this.value)) this.validator.addError(new ValidationError(this.name, type.toUpperCase()));
+		return null;
 	}
 
 }

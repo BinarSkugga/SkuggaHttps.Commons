@@ -3,6 +3,7 @@ package com.binarskugga.skuggahttps.validation;
 import com.binarskugga.skuggahttps.validation.impl.*;
 
 import java.util.*;
+import java.util.function.*;
 
 public class Validator {
 
@@ -28,12 +29,8 @@ public class Validator {
 		return new DoubleValidator(this, name.toUpperCase(), value);
 	}
 
-	public ValueValidator<ValueValidator, Object> object(String name, Object value) {
-		return new ValueValidator<>(this, name.toUpperCase(), value);
-	}
-
-	public <T> ValueValidator<ValueValidator, T> generic(Class<T> clazz, String name, T value) {
-		return new ValueValidator<>(this, name.toUpperCase(), value);
+	public <T> ObjectValidator<T> object(String name, Class<T> type, T value) {
+		return new ObjectValidator<>(this, name, type, value);
 	}
 
 	public void addError(ValidationError error) {
