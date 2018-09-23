@@ -35,12 +35,16 @@ public class TransformableImage implements HttpReturnable {
 	}
 
 	public TransformableImage resize(int size) {
+		return this.resize(size, size);
+	}
+
+	public TransformableImage resize(int width, int height) {
 		ByteArrayInputStream in = new ByteArrayInputStream(this.getData());
 		try {
 			BufferedImage img = ImageIO.read(in);
 
-			Image scaledImage = img.getScaledInstance(size, size, Image.SCALE_SMOOTH);
-			BufferedImage imageBuff = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+			Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 			ImageIO.write(imageBuff, this.getType().toLowerCase(), buffer);
