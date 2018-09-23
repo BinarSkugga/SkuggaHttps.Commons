@@ -5,6 +5,7 @@ import com.google.common.io.*;
 import lombok.*;
 
 import javax.imageio.*;
+import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import java.util.*;
@@ -30,6 +31,32 @@ public class TransformableImage {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public TransformableImage resize(String size) {
+		ImageResize resize = ImageResize.ORGINAL;
+		try {
+			resize = ImageResize.valueOf(size.toUpperCase());
+		} catch(Exception e){}
+
+		if(resize.equals(ImageResize.ORGINAL)) return this;
+
+		ByteArrayInputStream in = new ByteArrayInputStream(this.getData());
+		try {
+			BufferedImage img = ImageIO.read(in);
+
+			Image scaledImage = img.getScaledInstance(resize.getSize(), resize.getSize(), Image.SCALE_SMOOTH);
+			BufferedImage imageBuff = new BufferedImage(resize.getSize(), resize.getSize(), BufferedImage.TYPE_INT_RGB);
+			imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			ImageIO.write(imageBuff, this.getType().toLowerCase(), buffer);
+
+			TransformableImage cropped = new TransformableImage();
+			cropped.setData(buffer.toByteArray());
+			cropped.setType(this.getType());
+			return cropped;
+		} catch (IOException e) {}
+		return this;
 	}
 
 }
