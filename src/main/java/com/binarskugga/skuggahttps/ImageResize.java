@@ -3,7 +3,7 @@ package com.binarskugga.skuggahttps;
 import lombok.*;
 
 public enum ImageResize {
-	SMALL(64), MEDIUM(256), LARGE(512), ORGINAL(0);
+	SMALL(64), MEDIUM(256), LARGE(512);
 
 	@Getter
 	private int size;

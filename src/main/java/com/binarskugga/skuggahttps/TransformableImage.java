@@ -34,12 +34,12 @@ public class TransformableImage {
 	}
 
 	public TransformableImage resize(String size) {
-		ImageResize resize = ImageResize.ORGINAL;
+		ImageResize resize = null;
 		try {
 			resize = ImageResize.valueOf(size.toUpperCase());
 		} catch(Exception e){}
 
-		if(resize.equals(ImageResize.ORGINAL)) return this;
+		if(resize == null) return this;
 
 		ByteArrayInputStream in = new ByteArrayInputStream(this.getData());
 		try {
