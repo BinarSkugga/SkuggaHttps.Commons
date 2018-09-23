@@ -2,6 +2,7 @@ package com.binarskugga.skuggahttps;
 
 import com.google.common.base.*;
 import com.google.common.io.*;
+import com.sun.net.httpserver.*;
 import lombok.*;
 
 import javax.imageio.*;
@@ -11,7 +12,7 @@ import java.io.*;
 import java.util.*;
 
 @NoArgsConstructor
-public class TransformableImage {
+public class TransformableImage implements HttpReturnable {
 
 	@Getter @Setter private String type;
 	@Getter @Setter private byte[] data;
@@ -33,20 +34,13 @@ public class TransformableImage {
 		}
 	}
 
-	public TransformableImage resize(String size) {
-		ImageResize resize = null;
-		try {
-			resize = ImageResize.valueOf(size.toUpperCase());
-		} catch(Exception e){}
-
-		if(resize == null) return this;
-
+	public TransformableImage resize(int size) {
 		ByteArrayInputStream in = new ByteArrayInputStream(this.getData());
 		try {
 			BufferedImage img = ImageIO.read(in);
 
-			Image scaledImage = img.getScaledInstance(resize.getSize(), resize.getSize(), Image.SCALE_SMOOTH);
-			BufferedImage imageBuff = new BufferedImage(resize.getSize(), resize.getSize(), BufferedImage.TYPE_INT_RGB);
+			Image scaledImage = img.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+			BufferedImage imageBuff = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 			imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 			ImageIO.write(imageBuff, this.getType().toLowerCase(), buffer);
@@ -57,6 +51,16 @@ public class TransformableImage {
 			return cropped;
 		} catch (IOException e) {}
 		return this;
+	}
+
+	@Override
+	public void changeHeaders(Headers headers) {
+		headers.set("Content-Type", "image/" + this.type.toLowerCase());
+	}
+
+	@Override
+	public void write(OutputStream stream) throws IOException {
+		stream.write(this.data);
 	}
 
 }
