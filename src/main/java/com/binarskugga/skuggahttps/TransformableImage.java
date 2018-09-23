@@ -4,6 +4,8 @@ import com.google.common.base.*;
 import com.google.common.io.*;
 import lombok.*;
 
+import javax.imageio.*;
+import java.awt.image.*;
 import java.io.*;
 import java.util.*;
 
@@ -21,7 +23,10 @@ public class TransformableImage {
 	public TransformableImage(File file) {
 		try {
 			this.type = Files.getFileExtension(file.getName()).toUpperCase();
-			this.data = Files.asCharSource(file, Charsets.UTF_8).read().getBytes(Charsets.UTF_8);
+			BufferedImage bimg = ImageIO.read(file);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bimg, this.type, bos);
+			this.data = bos.toByteArray();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
