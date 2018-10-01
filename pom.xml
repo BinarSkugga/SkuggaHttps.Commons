@@ -4,7 +4,7 @@
 
 	<groupId>com.binarskugga</groupId>
 	<artifactId>skuggahttps.commons</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<packaging>jar</packaging>
 
 	<name>SkuggaHttps.Commons</name>
@@ -79,12 +79,6 @@
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>25.1-jre</version>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

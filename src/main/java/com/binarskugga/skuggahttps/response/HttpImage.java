@@ -1,30 +1,30 @@
-package com.binarskugga.skuggahttps;
+package com.binarskugga.skuggahttps.response;
 
-import com.google.common.base.*;
-import com.google.common.io.*;
-import com.sun.net.httpserver.*;
+import com.binarskugga.skuggahttps.*;
 import lombok.*;
 
 import javax.imageio.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.nio.charset.*;
 import java.util.*;
 
 @NoArgsConstructor
-public class TransformableImage implements HttpReturnable {
+public class HttpImage implements HttpReturnable {
 
 	@Getter @Setter private String type;
 	@Getter @Setter private byte[] data;
 
-	public TransformableImage(String type, String base64) {
+	public HttpImage(String type, String base64) {
 		this.type = type;
-		this.data = Base64.getDecoder().decode(base64.getBytes(Charsets.UTF_8));
+		this.data = Base64.getDecoder().decode(base64.getBytes(Charset.forName("UTF-8")));
 	}
 
-	public TransformableImage(File file) {
+	public HttpImage(File file) {
 		try {
-			this.type = Files.getFileExtension(file.getName()).toUpperCase();
+			String name = file.getName();
+			this.type = name.substring(name.lastIndexOf(".") + 1).toUpperCase();
 			BufferedImage bimg = ImageIO.read(file);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bimg, this.type, bos);
@@ -34,11 +34,11 @@ public class TransformableImage implements HttpReturnable {
 		}
 	}
 
-	public TransformableImage resize(int size) {
+	public HttpImage resize(int size) {
 		return this.resize(size, size);
 	}
 
-	public TransformableImage resize(int width, int height) {
+	public HttpImage resize(int width, int height) {
 		ByteArrayInputStream in = new ByteArrayInputStream(this.getData());
 		try {
 			BufferedImage img = ImageIO.read(in);
@@ -49,7 +49,7 @@ public class TransformableImage implements HttpReturnable {
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 			ImageIO.write(imageBuff, this.getType().toLowerCase(), buffer);
 
-			TransformableImage cropped = new TransformableImage();
+			HttpImage cropped = new HttpImage();
 			cropped.setData(buffer.toByteArray());
 			cropped.setType(this.getType());
 			return cropped;
@@ -58,12 +58,12 @@ public class TransformableImage implements HttpReturnable {
 	}
 
 	@Override
-	public void changeHeaders(Headers headers) {
-		headers.set("Content-Type", "image/" + this.type.toLowerCase());
+	public String contentType() {
+		return "image/" + this.type.toLowerCase();
 	}
 
 	@Override
-	public void write(OutputStream stream) throws IOException {
+	public void write(OutputStream stream, HttpResponseHandler handler) throws IOException {
 		stream.write(this.data);
 	}
 
