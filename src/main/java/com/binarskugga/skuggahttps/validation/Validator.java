@@ -30,7 +30,7 @@ public class Validator {
 	}
 
 	public <T> ObjectValidator<T> object(String name, Class<T> type, T value) {
-		return new ObjectValidator<>(this, name, type, value);
+		return new ObjectValidator<>(this, name.toUpperCase(), type, value);
 	}
 
 	public void addError(ValidationError error) {
